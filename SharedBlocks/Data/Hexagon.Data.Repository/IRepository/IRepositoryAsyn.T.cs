@@ -18,6 +18,7 @@ namespace Hexagon.Data.Repository.IRepository
 
         Task<List<T>> FindListBySql(string strSql);
         Task<T> FindEntityById(int id);
+        Task<T> FindEntityById(string id);
 
     }
 }

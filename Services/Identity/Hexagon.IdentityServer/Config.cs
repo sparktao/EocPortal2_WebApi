@@ -18,8 +18,7 @@ namespace Hexagon.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email(),
-                new IdentityResource("dataeventrecordsscope",new []{ "role", "admin", "user", "dataEventRecords", "dataEventRecords.admin" , "dataEventRecords.user" } )
+                new IdentityResources.Email()
             };
         }
 
@@ -27,22 +26,7 @@ namespace Hexagon.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("dataEventRecords")
-                {
-                    ApiSecrets =
-                    {
-                        new Secret("dataEventRecordsSecret".Sha256())
-                    },
-                    Scopes =
-                    {
-                        new Scope
-                        {
-                            Name = "dataeventrecordsscope1",
-                            DisplayName = "Scope for the dataEventRecords ApiResource"
-                        }
-                    },
-                    UserClaims = { "role", "admin", "user", "dataEventRecords", "dataEventRecords.admin", "dataEventRecords.user" }
-                }
+                new ApiResource("restapi", "my resetful api")
             };
         }
 
@@ -53,17 +37,35 @@ namespace Hexagon.IdentityServer
             {
                 new Client
                 {
-                    ClientId = "anotherWebMvc",
+                    ClientId = "client",
+
+                    // no interactive user, use the clientid/secret for authentication
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    // secret for authentication
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    // scopes that client has access to
+                    AllowedScopes = { "restapi" }
+                },
+                new Client
+                {
+                    ClientId = "mvcclient",
                     ClientName = "MVC Client",
+                    
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
                     ClientSecrets =
                     {
-                        new Secret("dataEventRecordsSecret".Sha256())
+                        new Secret("2ac6982f-d0ce-4a51-8f58-48e817447c92".Sha256())
                     },
 
-                    RedirectUris = { string.Format("{0}/signin-oidc", configuration.GetValue<string>("AnotherWebMvc")) },
-                    PostLogoutRedirectUris = { string.Format("{0}/signout-callback-oidc", configuration.GetValue<string>("AnotherWebMvc")) },
+                    RedirectUris = { string.Format("{0}/signin-oidc", configuration.GetValue<string>("mvcclient")) },
+                    //FrontChannelLogoutUri =  string.Format("{0}/signout-oidc", configuration.GetValue<string>("mvcclient")) ,
+                    PostLogoutRedirectUris = { string.Format("{0}/signout-callback-oidc", configuration.GetValue<string>("mvcclient")) },
                     //OpenId, Profile 准许页面可以通过设置false去除
                     RequireConsent = true,
 
@@ -72,38 +74,37 @@ namespace Hexagon.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "dataEventRecords"
+                        "restapi"
                     },
                     AllowOfflineAccess = true
                 },
+
+                // SPA client using implicit flow
                 new Client
                 {
-                    ClientId = "resourceownerclient",
-                    ClientName = "WebEoc",
+                    ClientId = "ng-client",
+                    ClientName = "Angular Client",
+                    ClientUri = "http://localhost:4200",
 
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AccessTokenType = AccessTokenType.Jwt,
-                    AccessTokenLifetime = 3600,
-                    IdentityTokenLifetime = 3600,
-                    UpdateAccessTokenClaimsOnRefresh = true,
-                    SlidingRefreshTokenLifetime = 30,
-                    AllowOfflineAccess = true,
-                    RefreshTokenExpiration = TokenExpiration.Absolute,
-                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
-                    AlwaysSendClientClaims = true,
-                    Enabled = true,
-                    ClientSecrets=  new List<Secret> { new Secret("dataEventRecordsSecret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
+                    AccessTokenLifetime = 180,
 
-                    RedirectUris = { string.Format("{0}/signin-oidc", configuration.GetValue<string>("WebEoc")) },
-                    PostLogoutRedirectUris = { string.Format("{0}/signout-callback-oidc", configuration.GetValue<string>("WebEoc")) },
+                    RedirectUris =
+                    {
+                        "http://localhost:4200/signin-oidc",
+                        "http://localhost:4200/redirect-silentrenew"
+                    },
+
+                    PostLogoutRedirectUris = { "http://localhost:4200/" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
 
                     AllowedScopes = {
-                        IdentityServerConstants.StandardScopes.OpenId, 
+                        IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "dataEventRecords"
+                        "restapi"
                     }
                 }
             };

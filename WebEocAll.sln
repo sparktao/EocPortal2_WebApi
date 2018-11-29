@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{79CB90
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapi", "WebApp\webapi\webapi.csproj", "{53FCA91E-5AE1-4FDF-8F5A-495BA782749A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcClient", "MvcClient\MvcClient.csproj", "{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{53FCA91E-5AE1-4FDF-8F5A-495BA782749A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53FCA91E-5AE1-4FDF-8F5A-495BA782749A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53FCA91E-5AE1-4FDF-8F5A-495BA782749A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{7BF2F91A-1AE5-41DC-B3C4-56681436863B} = {06E127AB-138F-4ED3-BE20-08D47EA45D88}
 		{88D36F7C-6634-4315-AE74-7E2A3C75731B} = {7BF2F91A-1AE5-41DC-B3C4-56681436863B}
 		{53FCA91E-5AE1-4FDF-8F5A-495BA782749A} = {79CB9079-E9A1-4680-9825-E63A784B4FB4}
+		{59F4DF82-DFE3-4BFC-AA5A-60F1F3CA308E} = {79CB9079-E9A1-4680-9825-E63A784B4FB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A06A8F94-A931-4AB1-A92A-0C2B551337C7}

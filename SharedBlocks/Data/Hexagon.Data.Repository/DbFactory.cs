@@ -4,10 +4,10 @@ using System;
 namespace Hexagon.Data.Repository
 {
     /// <summary>
-    /// 版 本 6.1
-    /// Copyright (c) 2013-2016 上海力软信息技术有限公司
-    /// 创建人：佘赐雄
-    /// 日 期：2015.10.10
+    /// 版 本 1.0
+    /// Copyright (c) 2018-2020
+    /// 创建人：
+    /// 日 期：2018.10.10
     /// 描 述：数据库建立工厂
     /// </summary>
     public class DbFactory

@@ -9,5 +9,6 @@ namespace Hexagon.IService
     public interface IBaseModuleService
     {
         Task<List<Base_Module>> GetModuleList();
+        Task<Base_Module> GetModuleById(string id);
     }
 }

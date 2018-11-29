@@ -1,0 +1,171 @@
+2018-11-28 09:29:53.545 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 09:30:33.936 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 09:31:02.356 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:31:02.578 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:31:02.594 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:31:06.719 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4111.4298ms.
+2018-11-28 09:31:06.733 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:31:06.839 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 4253.3956ms
+2018-11-28 09:31:06.856 +08:00 [INF] Request finished in 4501.1394ms 200 application/json; charset=utf-8
+2018-11-28 09:31:06.884 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/favicon.ico  
+2018-11-28 09:31:06.897 +08:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'D:\workspace\angular\EocPortal2\eoc2nd\webapi\WebApp\webapi\wwwroot\favicon.ico'
+2018-11-28 09:31:06.900 +08:00 [INF] Request finished in 16.1001ms 200 image/x-icon
+2018-11-28 09:33:02.385 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 09:36:59.944 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/values  
+2018-11-28 09:36:59.988 +08:00 [INF] Request finished in 40.8524ms 307 
+2018-11-28 09:37:00.042 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:37:00.258 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:37:00.269 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:37:00.286 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.3684ms.
+2018-11-28 09:37:00.296 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:37:00.381 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 119.095ms
+2018-11-28 09:37:00.386 +08:00 [INF] Request finished in 343.8129ms 200 application/json; charset=utf-8
+2018-11-28 09:37:10.770 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/values  
+2018-11-28 09:37:10.771 +08:00 [INF] Request finished in 1.3191ms 307 
+2018-11-28 09:37:10.773 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:37:10.775 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:37:10.777 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:37:10.778 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0543ms.
+2018-11-28 09:37:10.781 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:37:10.783 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 6.4987ms
+2018-11-28 09:37:10.785 +08:00 [INF] Request finished in 11.8828ms 200 application/json; charset=utf-8
+2018-11-28 09:37:15.875 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/values  
+2018-11-28 09:37:15.877 +08:00 [INF] Request finished in 2.396ms 307 
+2018-11-28 09:37:15.896 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:37:15.900 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:37:15.903 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:37:15.904 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.007ms.
+2018-11-28 09:37:15.908 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:37:15.910 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 7.4652ms
+2018-11-28 09:37:15.912 +08:00 [INF] Request finished in 16.4058ms 200 application/json; charset=utf-8
+2018-11-28 09:37:47.909 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:37:47.917 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:37:47.922 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:37:47.934 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0476ms.
+2018-11-28 09:37:47.939 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:37:47.941 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 18.7419ms
+2018-11-28 09:37:47.950 +08:00 [INF] Request finished in 41.6137ms 200 application/json; charset=utf-8
+2018-11-28 09:38:13.863 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/values  
+2018-11-28 09:38:13.864 +08:00 [INF] Request finished in 1.2461ms 307 
+2018-11-28 09:38:13.872 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:38:13.875 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:38:13.876 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:38:13.878 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0074ms.
+2018-11-28 09:38:13.886 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:38:13.888 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 11.976600000000001ms
+2018-11-28 09:38:13.894 +08:00 [INF] Request finished in 21.9444ms 200 application/json; charset=utf-8
+2018-11-28 09:41:34.074 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 09:41:34.076 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 09:41:34.078 +08:00 [INF] Executing action method webapi.Controllers.ValuesController.Get (webapi) - Validation state: "Valid"
+2018-11-28 09:41:34.079 +08:00 [INF] Executed action method webapi.Controllers.ValuesController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.011600000000000001ms.
+2018-11-28 09:41:34.082 +08:00 [INF] Executing ObjectResult, writing value of type 'System.String[]'.
+2018-11-28 09:41:34.083 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 5.8305000000000007ms
+2018-11-28 09:41:34.088 +08:00 [INF] Request finished in 14.1769ms 200 application/json; charset=utf-8
+2018-11-28 10:27:31.587 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 10:32:20.532 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule  
+2018-11-28 10:32:20.681 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 10:32:20.694 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 10:32:21.928 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 10:32:21.932 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1225.8794ms.
+2018-11-28 10:32:21.943 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 10:32:22.028 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 1341.9906ms
+2018-11-28 10:32:22.037 +08:00 [INF] Request finished in 1509.2648ms 200 application/json; charset=utf-8
+2018-11-28 10:32:22.367 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/favicon.ico  
+2018-11-28 10:32:22.381 +08:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'D:\workspace\angular\EocPortal2\eoc2nd\webapi\WebApp\webapi\wwwroot\favicon.ico'
+2018-11-28 10:32:22.383 +08:00 [INF] Request finished in 16.6632ms 200 image/x-icon
+2018-11-28 10:32:37.552 +08:00 [INF] Request starting HTTP/1.1 OPTIONS https://localhost:6001/api/basemodule?  
+2018-11-28 10:32:37.566 +08:00 [INF] Policy execution successful.
+2018-11-28 10:32:37.621 +08:00 [INF] Request finished in 68.6623ms 204 
+2018-11-28 10:32:38.231 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule? application/json 
+2018-11-28 10:32:38.235 +08:00 [INF] Policy execution successful.
+2018-11-28 10:32:38.240 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 10:32:38.247 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 10:32:38.305 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 10:32:38.308 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 57.6141ms.
+2018-11-28 10:32:38.313 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 10:32:38.319 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 72.028ms
+2018-11-28 10:32:38.321 +08:00 [INF] Request finished in 89.7354ms 200 application/json; charset=utf-8
+2018-11-28 14:22:59.040 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 14:23:03.417 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/values  
+2018-11-28 14:23:03.490 +08:00 [INF] Request finished in 75.3916ms 307 
+2018-11-28 14:23:03.518 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/values  
+2018-11-28 14:23:03.544 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 14:23:03.777 +08:00 [INF] Route matched with {action = "Get", controller = "Values"}. Executing action webapi.Controllers.ValuesController.Get (webapi)
+2018-11-28 14:23:03.796 +08:00 [INF] Authorization failed.
+2018-11-28 14:23:03.803 +08:00 [INF] Authorization failed for the request at filter 'Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter'.
+2018-11-28 14:23:03.811 +08:00 [INF] Executing ChallengeResult with authentication schemes ([]).
+2018-11-28 14:23:03.906 +08:00 [INF] AuthenticationScheme: BearerIdentityServerAuthenticationJwt was challenged.
+2018-11-28 14:23:03.908 +08:00 [INF] AuthenticationScheme: Bearer was challenged.
+2018-11-28 14:23:03.913 +08:00 [INF] Executed action webapi.Controllers.ValuesController.Get (webapi) in 131.01770000000002ms
+2018-11-28 14:23:03.927 +08:00 [INF] Request finished in 409.0126ms 401 
+2018-11-28 17:53:52.897 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 17:54:24.465 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/basemodule  
+2018-11-28 17:54:24.501 +08:00 [INF] Request finished in 39.0385ms 307 
+2018-11-28 17:54:24.526 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule  
+2018-11-28 17:54:24.554 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 17:54:24.792 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 17:54:24.814 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 17:54:26.287 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 17:54:26.295 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1462.1044000000002ms.
+2018-11-28 17:54:26.306 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 17:54:26.399 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 1599.8698000000002ms
+2018-11-28 17:54:26.404 +08:00 [INF] Request finished in 1878.2338ms 200 application/json; charset=utf-8
+2018-11-28 18:01:59.983 +08:00 [INF] User profile is available. Using 'C:\Users\jtao\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-28 18:02:05.644 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:6000/api/basemodule  
+2018-11-28 18:02:05.678 +08:00 [INF] Request finished in 36.9701ms 307 
+2018-11-28 18:02:05.700 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule  
+2018-11-28 18:02:05.720 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:02:05.921 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 18:02:05.947 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 18:02:07.240 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 18:02:07.246 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1286.9044000000001ms.
+2018-11-28 18:02:07.256 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 18:02:07.343 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 1413.7729000000002ms
+2018-11-28 18:02:07.348 +08:00 [INF] Request finished in 1648.3112ms 200 application/json; charset=utf-8
+2018-11-28 18:04:36.111 +08:00 [INF] Request starting HTTP/1.1 OPTIONS https://localhost:6001/api/api/basemodule?  
+2018-11-28 18:04:36.115 +08:00 [INF] Policy execution successful.
+2018-11-28 18:04:36.116 +08:00 [INF] Request finished in 4.5695ms 204 
+2018-11-28 18:04:36.433 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/api/basemodule? application/json 
+2018-11-28 18:04:36.436 +08:00 [INF] Policy execution successful.
+2018-11-28 18:04:36.437 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:04:36.456 +08:00 [INF] Request finished in 22.3665ms 404 
+2018-11-28 18:04:44.038 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/api/basemodule?  
+2018-11-28 18:04:44.041 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:04:44.045 +08:00 [INF] Request finished in 7.5001ms 404 
+2018-11-28 18:05:04.137 +08:00 [INF] Request starting HTTP/1.1 OPTIONS https://localhost:6001//api/basemodule?  
+2018-11-28 18:05:04.139 +08:00 [INF] Policy execution successful.
+2018-11-28 18:05:04.147 +08:00 [INF] Request finished in 10.0792ms 204 
+2018-11-28 18:05:04.644 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001//api/basemodule? application/json 
+2018-11-28 18:05:04.645 +08:00 [INF] Policy execution successful.
+2018-11-28 18:05:04.646 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:05:04.647 +08:00 [INF] Request finished in 3.6326ms 404 
+2018-11-28 18:05:26.452 +08:00 [INF] Request starting HTTP/1.1 OPTIONS https://localhost:6001/api/basemodule?  
+2018-11-28 18:05:26.453 +08:00 [INF] Policy execution successful.
+2018-11-28 18:05:26.456 +08:00 [INF] Request finished in 4.2973ms 204 
+2018-11-28 18:05:26.792 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule? application/json 
+2018-11-28 18:05:26.795 +08:00 [INF] Policy execution successful.
+2018-11-28 18:05:26.796 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:05:26.797 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 18:05:26.798 +08:00 [INF] Policy execution successful.
+2018-11-28 18:05:26.800 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 18:05:26.849 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 18:05:26.850 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 38.2187ms.
+2018-11-28 18:05:26.853 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 18:05:26.861 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 62.5437ms
+2018-11-28 18:05:26.862 +08:00 [INF] Request finished in 69.8608ms 200 application/json; charset=utf-8
+2018-11-28 18:31:33.514 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:4200/api/basemodule? application/json 
+2018-11-28 18:31:33.529 +08:00 [INF] Request finished in 15.5825ms 307 
+2018-11-28 18:31:33.918 +08:00 [INF] Request starting HTTP/1.1 OPTIONS https://localhost:6001/api/basemodule?  
+2018-11-28 18:31:33.920 +08:00 [INF] Policy execution successful.
+2018-11-28 18:31:33.923 +08:00 [INF] Request finished in 5.2994ms 204 
+2018-11-28 18:31:34.017 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:6001/api/basemodule? application/json 
+2018-11-28 18:31:34.020 +08:00 [INF] Policy execution successful.
+2018-11-28 18:31:34.025 +08:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2018-11-28 18:31:34.028 +08:00 [INF] Route matched with {action = "Get", controller = "BaseModule"}. Executing action webapi.Controllers.BaseModuleController.Get (webapi)
+2018-11-28 18:31:34.030 +08:00 [INF] Policy execution successful.
+2018-11-28 18:31:34.031 +08:00 [INF] Executing action method webapi.Controllers.BaseModuleController.Get (webapi) - Validation state: "Valid"
+2018-11-28 18:31:34.050 +08:00 [INF] ===========================================Get All Module=========================
+2018-11-28 18:31:34.051 +08:00 [INF] Executed action method webapi.Controllers.BaseModuleController.Get (webapi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 18.3128ms.
+2018-11-28 18:31:34.053 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Hexagon.Entity.Base_Module, Hexagon.IService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2018-11-28 18:31:34.056 +08:00 [INF] Executed action webapi.Controllers.BaseModuleController.Get (webapi) in 26.5009ms
+2018-11-28 18:31:34.058 +08:00 [INF] Request finished in 40.8369ms 200 application/json; charset=utf-8

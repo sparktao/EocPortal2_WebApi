@@ -30,5 +30,10 @@ namespace Hexagon.Data.Repository.Repository
             return await db.FindEntity<T>(id);
         }
 
+        public async Task<T> FindEntityById(string id)
+        {
+            return await db.FindEntity<T>(id);
+        }
+
     }
 }

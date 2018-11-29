@@ -4,9 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hexagon.IService;
 using Hexagon.Service;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,36 +32,76 @@ namespace webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(
+              options => {
+                  options.ReturnHttpNotAcceptable = true;
+                  //格式协商:如果在header中确定Accept=application/xml，可以发送xml格式结果；默认是json格式结果
+                  options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+              }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //add https capability, to configure middleware options
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                //default port value is 443
+                options.HttpsPort = 6001;
+            });
+
+            //IdentityServerAuthenticationDefaults.AuthenticationScheme == "Bearer"
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.RequireHttpsMetadata = true;
+
+                    options.ApiName = "resetapi";
+                });
 
             services.AddTransient<IOrgEmployee, OrgEmployee>();
             services.AddTransient<IBaseModuleService, BaseModuleService>();
+
+            //配置跨域
+            services.AddCors(options => {
+                options.AddPolicy("AllowAngularDevOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    //.WithExposedHeaders("X-Pagination")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            //对于所有controller需要认证用户才能访问
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAngularDevOrigin"));
+
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var options = new DefaultFilesOptions();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("index.html");
-            app.UseDefaultFiles(options);
-            app.UseStaticFiles();
-
-#if DEBUG
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowAnyOrigin();
-            });
-#endif
+            //var options = new DefaultFilesOptions();
+            //options.DefaultFileNames.Clear();
+            //options.DefaultFileNames.Add("index.html");
+            //app.UseDefaultFiles(options);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            //added before UseHttpsRedirection
+            app.UseCors("AllowAngularDevOrigin");
+
+            //HTTPS Redirection Middleware (UseHttpsRedirection) to redirect HTTP requests to HTTPS.
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseStaticFiles(); 
+        
             app.UseMvc();
         }
     }

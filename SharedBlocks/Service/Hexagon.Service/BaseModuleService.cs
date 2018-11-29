@@ -27,5 +27,12 @@ namespace Hexagon.Service
             string sql = "select distinct * FROM base_module order by code";
             return await BaseRepositoryAsyn(conString).FindListBySql(sql);
         }
+
+        public async Task<Base_Module> GetModuleById(string id)
+        {
+            StringBuilder strSql = new StringBuilder();
+
+            return await BaseRepositoryAsyn(conString).FindEntityById(id);
+        }
     }
 }

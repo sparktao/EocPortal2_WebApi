@@ -22,9 +22,10 @@ namespace webapi.Controllers
             _employeeSvr = employeeSvr;
         }
 
+        // Get api/employee
         [HttpGet]
         [ProducesResponseType(typeof(List<Organization_Employee>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAllEmployee() {
+        public async Task<IActionResult> Get() {
             var employeeList = await _employeeSvr.GetEmployeeList();
 
             if (employeeList is null)
