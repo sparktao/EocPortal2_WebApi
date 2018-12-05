@@ -84,7 +84,7 @@ namespace Hexagon.IdentityServer
                 {
                     ClientId = "ng-client",
                     ClientName = "Angular Client",
-                    ClientUri = "http://localhost:4200",
+                    ClientUri = configuration.GetValue<string>("ngclient"),
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
@@ -93,12 +93,12 @@ namespace Hexagon.IdentityServer
 
                     RedirectUris =
                     {
-                        "http://localhost:4200/signin-oidc",
-                        "http://localhost:4200/redirect-silentrenew"
+                        string.Format("{0}/signin-oidc", configuration.GetValue<string>("ngclient")),
+                        string.Format("{0}/redirect-silentrenew", configuration.GetValue<string>("ngclient"))
                     },
 
-                    PostLogoutRedirectUris = { "http://localhost:4200/" },
-                    AllowedCorsOrigins = { "http://localhost:4200" },
+                    PostLogoutRedirectUris = { configuration.GetValue<string>("ngclient") },
+                    AllowedCorsOrigins = { configuration.GetValue<string>("ngclient") },
 
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,

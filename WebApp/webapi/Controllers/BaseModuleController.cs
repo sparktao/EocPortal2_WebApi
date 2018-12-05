@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace webapi.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class BaseModuleController : ControllerBase

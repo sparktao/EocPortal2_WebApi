@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Hexagon.Entity;
 using Hexagon.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,17 +22,20 @@ namespace webapi.Controllers
         {
             _employeeSvr = employeeSvr;
         }
-
         // Get api/employee
-        [HttpGet]
-        [ProducesResponseType(typeof(List<Organization_Employee>), (int)HttpStatusCode.OK)]
+        [HttpGet(Name ="Get")]
         public async Task<IActionResult> Get() {
             var employeeList = await _employeeSvr.GetEmployeeList();
 
             if (employeeList is null)
                 return Ok();
 
-            return Ok(employeeList);
+            var data = new {
+                totalCount = employeeList.Count,
+                items = employeeList               
+            };
+
+            return Ok(data);
         }
 
 

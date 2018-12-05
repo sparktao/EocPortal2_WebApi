@@ -111,7 +111,7 @@ namespace Hexagon.Entity
         /// </summary>
         /// <returns></returns>
         [DisplayName("单位ID")]
-        public string ORGANIZATION_ID { get; set; }
+        public string Organization_Id { get; set; }
         /// <summary>
         /// 办公室房间号
         /// </summary>

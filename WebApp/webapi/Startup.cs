@@ -22,6 +22,8 @@ namespace webapi
 {
     public class Startup
     {
+        private object configuration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -51,10 +53,8 @@ namespace webapi
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:5001";
-                    options.RequireHttpsMetadata = true;
-
-                    options.ApiName = "resetapi";
+                    options.Authority = Configuration.GetValue<string>("IdentityUrl");
+                    options.ApiName = "restapi";
                 });
 
             services.AddTransient<IOrgEmployee, OrgEmployee>();
@@ -98,10 +98,9 @@ namespace webapi
             app.UseCors("AllowAngularDevOrigin");
 
             //HTTPS Redirection Middleware (UseHttpsRedirection) to redirect HTTP requests to HTTPS.
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection();            
+            app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseStaticFiles(); 
-        
             app.UseMvc();
         }
     }
