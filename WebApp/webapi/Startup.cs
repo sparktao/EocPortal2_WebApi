@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 
 namespace webapi
 {
@@ -39,7 +40,12 @@ namespace webapi
                   options.ReturnHttpNotAcceptable = true;
                   //格式协商:如果在header中确定Accept=application/xml，可以发送xml格式结果；默认是json格式结果
                   options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-              }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+              })
+              .AddJsonOptions(options =>
+              {
+                  options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+              })
+              .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //add https capability, to configure middleware options
             services.AddHttpsRedirection(options =>
@@ -64,7 +70,8 @@ namespace webapi
             services.AddCors(options => {
                 options.AddPolicy("AllowAngularDevOrigin",
                     builder => builder.WithOrigins("http://localhost:4200")
-                    //.WithExposedHeaders("X-Pagination")
+                    //header 带有X-Pagination
+                    .WithExposedHeaders("X-Pagination")
                     .AllowAnyHeader()
                     .AllowAnyMethod());
             });

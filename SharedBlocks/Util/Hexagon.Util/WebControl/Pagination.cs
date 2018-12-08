@@ -9,11 +9,11 @@ namespace Hexagon.Util.WebControl
         /// <summary>
         /// 每页行数
         /// </summary>
-        public int rows { get; set; }
+        public int PageSize { get; set; }
         /// <summary>
         /// 当前页
         /// </summary>
-        public int page { get; set; }
+        public int PageIndex { get; set; }
         /// <summary>
         /// 排序列
         /// </summary>
@@ -25,17 +25,17 @@ namespace Hexagon.Util.WebControl
         /// <summary>
         /// 总记录数
         /// </summary>
-        public int records { get; set; }
+        public int TotalItemsCount { get; set; }
         /// <summary>
         /// 总页数
         /// </summary>
-        public int total
+        public int TotalPages
         {
             get
             {
-                if (records > 0)
+                if (TotalItemsCount > 0)
                 {
-                    return records % this.rows == 0 ? records / this.rows : records / this.rows + 1;
+                    return TotalItemsCount % this.PageSize == 0 ? TotalItemsCount / this.PageSize : TotalItemsCount / this.PageSize + 1;
                 }
                 else
                 {

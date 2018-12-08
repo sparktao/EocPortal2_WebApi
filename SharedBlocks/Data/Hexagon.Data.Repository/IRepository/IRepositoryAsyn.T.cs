@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Hexagon.Util.WebControl;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,9 +18,20 @@ namespace Hexagon.Data.Repository.IRepository
     public interface IRepositoryAsyn<T> where T : class, new()
     {
 
+        Task<int> ExecuteBySql(string strSql);
+
+        Task<int> ExecuteBySql(string strSql, DbParameter[] parameters);
+
         Task<List<T>> FindListBySql(string strSql);
+
+        Task<PaginatedList<T>> FindListPageBySql(string strSql, Pagination pagination);
+
+        Task<PaginatedList<T>> FindListPageBySql(string strSql, DbParameter[] parameters, Pagination pagination);
+
         Task<T> FindEntityById(int id);
         Task<T> FindEntityById(string id);
+
+        Task<int> Insert(T entity);
 
     }
 }

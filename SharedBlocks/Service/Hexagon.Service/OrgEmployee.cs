@@ -7,6 +7,9 @@ using System.Text;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using System.Data.Common;
+using Oracle.ManagedDataAccess.Client;
+using Hexagon.Util.WebControl;
 
 namespace Hexagon.Service
 {
@@ -35,6 +38,33 @@ namespace Hexagon.Service
             //    //  also known as tnsnames.ora.
             //    "Data Source=192.168.48.30:1521/cad93;";
             return await BaseRepositoryAsyn(conString).FindListBySql(sql);
+        }
+
+        public async Task<PaginatedList<Organization_Employee>> GetPagedEmployeeList(Pagination pagination)
+        {
+            string sqlClause = @"select * from organization_employee";
+            return await BaseRepositoryAsyn(conString).FindListPageBySql(sqlClause, pagination);
+        }
+
+        public async Task<int> InsertEmployee(Organization_Employee employee)
+        {
+            string sql = @"insert into organization_employee(
+                                employee_id, employee_name, gender, birthday, contact_phone, email, 
+                                organization_id, created_date, modified_date, isvalid)
+                            values(seq_org_employee.nextval, :employee_name, :gender, :birthday, :contact_phone, :email,
+                                  17, sysdate, sysdate, :isvalid)";
+
+            List<DbParameter> parameters = new List<DbParameter>();
+            parameters.Add(new OracleParameter("employee_name",  employee.Employee_Name));
+            parameters.Add(new OracleParameter("gender", employee.Gender));
+
+            parameters.Add(new OracleParameter("birthday", employee.Birthday));
+            parameters.Add(new OracleParameter("contact_phone", employee.Contact_Phone));
+            parameters.Add(new OracleParameter("email", employee.Email));
+            parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
+
+            return await BaseRepositoryAsyn(conString).ExecuteBySql(sql, parameters.ToArray());
+
         }
     }
 }

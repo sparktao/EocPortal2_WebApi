@@ -5,12 +5,17 @@ using System.Net;
 using System.Threading.Tasks;
 using Hexagon.Entity;
 using Hexagon.IService;
+using Hexagon.Util.WebControl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using webapi.Models;
 
 namespace webapi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -22,20 +27,55 @@ namespace webapi.Controllers
         {
             _employeeSvr = employeeSvr;
         }
+        [AllowAnonymous]
         // Get api/employee
         [HttpGet(Name ="Get")]
-        public async Task<IActionResult> Get() {
-            var employeeList = await _employeeSvr.GetEmployeeList();
-
+        public async Task<IActionResult> Get([FromHeader] Pagination pagination) {
+            //var employeeList = await _employeeSvr.GetEmployeeList();
+            var employeeList = await _employeeSvr.GetPagedEmployeeList(pagination);
             if (employeeList is null)
                 return Ok();
 
-            var data = new {
-                totalCount = employeeList.Count,
-                items = employeeList               
+            //var data = new {
+            //    totalCount = employeeList,
+            //    items = employeeList               
+            //};
+
+            //return Ok(data);
+
+            var meta = new
+            {
+                employeeList.TotalItemsCount,
+                employeeList.PageSize,
+                employeeList.PageIndex,
+                employeeList.PageCount
+                //previousPageLink,
+                //nextPageLink
             };
 
-            return Ok(data);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(meta, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            }));
+            return Ok(employeeList);
+        }
+        [AllowAnonymous]
+        //Post api/employee
+        [HttpPost(Name = "CreateEmployee")]
+        public async Task<IActionResult> Create(CreateOrgEmployeeDTO createEmployee) {
+
+            Organization_Employee employee = new Organization_Employee() {
+                Employee_Name = createEmployee.employee_Name,
+                Gender = createEmployee.gender,
+                Birthday = createEmployee.birthday,
+                Contact_Phone = createEmployee.contact_Phone,
+                Email = createEmployee.email,
+                Isvalid = (createEmployee.isvalid)? 1 : 0                
+            };
+
+            int result = await _employeeSvr.InsertEmployee(employee);
+            
+            return Ok();
         }
 
 

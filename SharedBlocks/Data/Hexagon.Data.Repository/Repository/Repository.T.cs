@@ -77,16 +77,16 @@ namespace Hexagon.Data.Repository
         }
         public DataTable FindTable(string strSql, Pagination pagination)
         {
-            int total = pagination.records;
-            var data = db.FindTablePage<T>(strSql, pagination.sidx, pagination.sord,  pagination.rows, pagination.page, ref total);
-            pagination.records = total;
+            int total = pagination.TotalItemsCount;
+            var data = db.FindTablePage<T>(strSql, pagination.sidx, pagination.sord,  pagination.PageSize, pagination.PageIndex, ref total);
+            pagination.TotalItemsCount = total;
             return data;
         }
         public DataTable FindTable(string strSql, DbParameter[] dbParameter, Pagination pagination)
         {
-            int total = pagination.records;
-            var data = db.FindTablePage<T>(strSql, dbParameter, pagination.sidx, pagination.sord, pagination.rows, pagination.page, ref total);
-            pagination.records = total;
+            int total = pagination.TotalItemsCount;
+            var data = db.FindTablePage<T>(strSql, dbParameter, pagination.sidx, pagination.sord, pagination.PageSize, pagination.PageIndex, ref total);
+            pagination.TotalItemsCount = total;
             return data;
         }
 
