@@ -19,7 +19,7 @@ namespace Hexagon.Data.DataAccess
         public static string CreateDbParmCharacter()
         {
             string character = string.Empty;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     character = "@";
@@ -50,7 +50,7 @@ namespace Hexagon.Data.DataAccess
         public static DbConnection CreateDbConnection(string connectionString)
         {
             DbConnection conn = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     conn = new SqlConnection(connectionString);
@@ -71,7 +71,7 @@ namespace Hexagon.Data.DataAccess
         public static DbCommand CreateDbCommand()
         {
             DbCommand cmd = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     cmd = new SqlCommand();
@@ -92,7 +92,7 @@ namespace Hexagon.Data.DataAccess
         public static IDbDataAdapter CreateDataAdapter()
         {
             IDbDataAdapter adapter = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     adapter = new SqlDataAdapter();
@@ -114,7 +114,7 @@ namespace Hexagon.Data.DataAccess
         public static IDbDataAdapter CreateDataAdapter(DbCommand cmd)
         {
             IDbDataAdapter adapter = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     adapter = new SqlDataAdapter((SqlCommand)cmd);
@@ -135,7 +135,7 @@ namespace Hexagon.Data.DataAccess
         public static DbParameter CreateDbParameter()
         {
             DbParameter param = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     param = new SqlParameter();
@@ -223,7 +223,7 @@ namespace Hexagon.Data.DataAccess
         {
             int i = 0;
             DbParameter[] param = null;
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     param = new SqlParameter[size];

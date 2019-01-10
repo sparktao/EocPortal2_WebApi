@@ -26,7 +26,7 @@ namespace Hexagon.Entity
         /// </summary>
         /// <returns></returns>
         [DisplayName("联系人ID")]
-        public double Employee_Id { get; set; }
+        public long Employee_Id { get; set; }
         /// <summary>
         /// 联系人姓名
         /// </summary>

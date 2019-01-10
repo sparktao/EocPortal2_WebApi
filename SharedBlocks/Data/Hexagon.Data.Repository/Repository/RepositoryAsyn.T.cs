@@ -55,7 +55,7 @@ namespace Hexagon.Data.Repository.Repository
             return new PaginatedList<T>(pageIndex, pageSize, result.Item1, result.Item2);
         }
 
-        public async Task<T> FindEntityById(int id)
+        public async Task<T> FindEntityById(long id)
         {
             return await db.FindEntity<T>(id);
         }
@@ -68,6 +68,11 @@ namespace Hexagon.Data.Repository.Repository
         public async Task<int> Insert(T entity)
         {
             return await db.Insert<T>(entity);
+        }
+
+        public async Task<int> Update(T entity)
+        {
+            return await db.Update<T>(entity);
         }
 
     }

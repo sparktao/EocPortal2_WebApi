@@ -27,9 +27,9 @@ namespace webapi.Controllers
         {
             _employeeSvr = employeeSvr;
         }
-        [AllowAnonymous]
+
         // Get api/employee
-        [HttpGet(Name ="Get")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromHeader] Pagination pagination) {
             //var employeeList = await _employeeSvr.GetEmployeeList();
             var employeeList = await _employeeSvr.GetPagedEmployeeList(pagination);
@@ -59,6 +59,15 @@ namespace webapi.Controllers
             }));
             return Ok(employeeList);
         }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(long id)
+        {
+            var employee = await _employeeSvr.GetEmployeeById(id);
+            return Ok(employee);
+        }
+
         [AllowAnonymous]
         //Post api/employee
         [HttpPost(Name = "CreateEmployee")]
@@ -76,6 +85,23 @@ namespace webapi.Controllers
             int result = await _employeeSvr.InsertEmployee(employee);
             
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] Organization_Employee postEmployee)
+        {
+            if (postEmployee == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _employeeSvr.UpdateEmployee(postEmployee);
+
+            if (result > -1)
+                return Ok();
+
+            return NoContent();
         }
 
 

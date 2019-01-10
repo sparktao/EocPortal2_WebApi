@@ -19,24 +19,11 @@ namespace Hexagon.Data.Repository
         /// </summary>
         /// <param name="connString">连接字符串</param>
         /// <returns></returns>
-        public IRepository<T> BaseRepository(string connString)
-        {
-            return new Repository<T>(DbFactory.Base(connString, DatabaseType.Oracle));
-        }
-
         public IRepositoryAsyn<T> BaseRepositoryAsyn(string connString)
         {
             return new RepositoryAsyn<T>(DbFactory.BaseAsyn(connString, DatabaseType.Oracle));
         }
 
 
-        /// <summary>
-        /// 定义仓储（基础库）
-        /// </summary>
-        /// <returns></returns>
-        public IRepository<T> BaseRepository()
-        {
-            return new Repository<T>(DbFactory.Base());
-        }
     }
 }

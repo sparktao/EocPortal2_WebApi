@@ -19,7 +19,7 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         public DatabaseAsync(string connstring)
         {
-            DbHelperAsync dbhelper = new DbHelperAsync(connstring);
+            DbHelperAsync DbHelperAsync = new DbHelperAsync(connstring);
         }
         /// <summary>
         /// 数据库连接对象
@@ -340,9 +340,9 @@ namespace Hexagon.Data.DataAccess
             sb.Append(" Set ");
             sb.Append(propertyName);
             sb.Append("=");
-            sb.Append(DbHelper.DbParmChar + propertyName);
+            sb.Append(DbHelperAsync.DbParmChar + propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
             return Convert.ToInt32(val);
         }
@@ -363,9 +363,9 @@ namespace Hexagon.Data.DataAccess
             sb.Append(" Set ");
             sb.Append(propertyName);
             sb.Append("=");
-            sb.Append(DbHelper.DbParmChar + propertyName);
+            sb.Append(DbHelperAsync.DbParmChar + propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
             return Convert.ToInt32(val);
         }
@@ -488,7 +488,7 @@ namespace Hexagon.Data.DataAccess
             string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, pkName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + pkName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -503,7 +503,7 @@ namespace Hexagon.Data.DataAccess
             string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, pkName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + pkName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -517,7 +517,7 @@ namespace Hexagon.Data.DataAccess
             string tableName = typeof(T).Name;//获取表名
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -532,7 +532,7 @@ namespace Hexagon.Data.DataAccess
             string tableName = typeof(T).Name;//获取表名
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -546,7 +546,7 @@ namespace Hexagon.Data.DataAccess
         {
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -561,7 +561,7 @@ namespace Hexagon.Data.DataAccess
         {
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -603,16 +603,16 @@ namespace Hexagon.Data.DataAccess
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -633,21 +633,21 @@ namespace Hexagon.Data.DataAccess
         {
             string tableName = typeof(T).Name;//获取表名
             string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键
-            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelper.DbParmChar + pkName + " IN (");
+            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelperAsync.DbParmChar + pkName + " IN (");
             try
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -668,21 +668,21 @@ namespace Hexagon.Data.DataAccess
         {
             string tableName = typeof(T).Name;//获取表名
             string pkName = propertyName;
-            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelper.DbParmChar + pkName + " IN (");
+            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelperAsync.DbParmChar + pkName + " IN (");
             try
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -704,21 +704,21 @@ namespace Hexagon.Data.DataAccess
         {
             string tableName = typeof(T).Name;//获取表名
             string pkName = propertyName;
-            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelper.DbParmChar + pkName + " IN (");
+            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelperAsync.DbParmChar + pkName + " IN (");
             try
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -739,21 +739,21 @@ namespace Hexagon.Data.DataAccess
         public async Task<int> Delete(string tableName, string propertyName, object[] propertyValue)
         {
             string pkName = propertyName;
-            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelper.DbParmChar + pkName + " IN (");
+            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelperAsync.DbParmChar + pkName + " IN (");
             try
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -775,21 +775,21 @@ namespace Hexagon.Data.DataAccess
         public async Task<int> Delete(string tableName, string propertyName, object[] propertyValue, DbTransaction isOpenTrans)
         {
             string pkName = propertyName;
-            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelper.DbParmChar + pkName + " IN (");
+            StringBuilder strSql = new StringBuilder("DELETE FROM " + tableName + " WHERE " + DbHelperAsync.DbParmChar + pkName + " IN (");
             try
             {
                 IList<DbParameter> parameter = new List<DbParameter>();
                 int index = 0;
-                string str = DbHelper.DbParmChar + "ID" + index;
+                string str = DbHelperAsync.DbParmChar + "ID" + index;
                 for (int i = 0; i < (propertyValue.Length - 1); i++)
                 {
                     object obj2 = propertyValue[i];
-                    str = DbHelper.DbParmChar + "ID" + index;
+                    str = DbHelperAsync.DbParmChar + "ID" + index;
                     strSql.Append(str).Append(",");
                     parameter.Add(DbFactory.CreateDbParameter(str, obj2));
                     index++;
                 }
-                str = DbHelper.DbParmChar + "ID" + index;
+                str = DbHelperAsync.DbParmChar + "ID" + index;
                 strSql.Append(str);
                 parameter.Add(DbFactory.CreateDbParameter(str, propertyValue[index]));
                 strSql.Append(")");
@@ -824,9 +824,9 @@ namespace Hexagon.Data.DataAccess
         public async Task<List<T>> FindListTop<T>(int Top, string propertyName, string propertyValue) where T : new()
         {
             StringBuilder strSql = DatabaseCommon.SelectSql<T>(Top);
-            strSql.Append(" AND " + propertyName + " = " + DbHelper.DbParmChar + propertyName);
+            strSql.Append(" AND " + propertyName + " = " + DbHelperAsync.DbParmChar + propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
             return await DatabaseReader.ReaderToList<T>(dr);
         }
@@ -876,9 +876,9 @@ namespace Hexagon.Data.DataAccess
         public async Task<List<T>> FindList<T>(string propertyName, string propertyValue) where T : new()
         {
             StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(" AND " + propertyName + " = " + DbHelper.DbParmChar + propertyName);
+            strSql.Append(" AND " + propertyName + " = " + DbHelperAsync.DbParmChar + propertyName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + propertyName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
             return await DatabaseReader.ReaderToList<T>(dr);
         }
@@ -1184,7 +1184,7 @@ namespace Hexagon.Data.DataAccess
         public async Task<Tuple<int, DataTable>> FindTablePageBySql(string strSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize)
         {
             //return SqlServerHelper.GetPageTable(strSql, parameters, orderField, orderType, pageIndex, pageSize, ref recordCount);
-            switch (DbHelper.DbType)
+            switch (DbHelperAsync.DbType)
             {
                 case DatabaseType.SqlServer:
                     return await SqlServerHelper.GetPageTableAsync(strSql, parameters, orderField, orderType, pageIndex, pageSize);
@@ -1229,9 +1229,9 @@ namespace Hexagon.Data.DataAccess
         {
             string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键字段
             StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelper.DbParmChar + pkName);
+            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + pkName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
             return await DatabaseReader.ReaderToModelAsync<T>(dr);
         }
@@ -1245,9 +1245,9 @@ namespace Hexagon.Data.DataAccess
         {
             string pkName = propertyName;
             StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelper.DbParmChar + pkName);
+            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + pkName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
             return await DatabaseReader.ReaderToModelAsync<T>(dr);
         }

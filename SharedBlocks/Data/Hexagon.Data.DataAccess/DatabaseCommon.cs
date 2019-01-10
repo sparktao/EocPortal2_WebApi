@@ -39,6 +39,9 @@ namespace Hexagon.Data.DataAccess
                         case "System.Nullable`1[System.Decimal]":
                             dbtype = DbType.Decimal;
                             break;
+                        case "System.Double":
+                            dbtype = DbType.Double;
+                            break;
                         case "System.Decimal":
                             dbtype = DbType.Decimal;
                             break;
@@ -49,7 +52,7 @@ namespace Hexagon.Data.DataAccess
                             dbtype = DbType.String;
                             break;
                     }
-                    parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + pi.Name,
+                    parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pi.Name,
                         (pi.GetValue(entity, null).Equals("&nbsp;") || pi.GetValue(entity, null).ToString().Trim() == string.Empty
                         ? DBNull.Value
                         : pi.GetValue(entity, null)), 
@@ -75,7 +78,7 @@ namespace Hexagon.Data.DataAccess
                     dbtype = DbType.DateTime;
                 else
                     dbtype = DbType.String;
-                parameter.Add(DbFactory.CreateDbParameter(DbHelper.DbParmChar + key, ht[key], dbtype));
+                parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + key, ht[key], dbtype));
             }
             return parameter.ToArray();
         }
@@ -202,7 +205,7 @@ namespace Hexagon.Data.DataAccess
                 if (ht[key] != null)
                 {
                     sb_prame.Append("," + key);
-                    sp.Append("," + DbHelper.DbParmChar + "" + key);
+                    sp.Append("," + DbHelperAsync.DbParmChar + "" + key);
                 }
             }
             sb.Append(sb_prame.ToString().Substring(1, sb_prame.ToString().Length - 1) + ") Values (");
@@ -230,7 +233,7 @@ namespace Hexagon.Data.DataAccess
                 if (prop.GetValue(entity, null) != null)
                 {
                     sb_prame.Append("," + (prop.Name));
-                    sp.Append("," + DbHelper.DbParmChar + "" + (prop.Name));
+                    sp.Append("," + DbHelperAsync.DbParmChar + "" + (prop.Name));
                 }
             }
             sb.Append(sb_prame.ToString().Substring(1, sb_prame.ToString().Length - 1) + ") Values (");
@@ -263,17 +266,17 @@ namespace Hexagon.Data.DataAccess
                         isFirstValue = false;
                         sb.Append(key);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + key);
+                        sb.Append(DbHelperAsync.DbParmChar + key);
                     }
                     else
                     {
                         sb.Append("," + key);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + key);
+                        sb.Append(DbHelperAsync.DbParmChar + key);
                     }
                 }
             }
-            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelper.DbParmChar + pkName);
+            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
             return sb;
         }
         /// <summary>
@@ -300,17 +303,17 @@ namespace Hexagon.Data.DataAccess
                         isFirstValue = false;
                         sb.Append(prop.Name);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + prop.Name);
+                        sb.Append(DbHelperAsync.DbParmChar + prop.Name);
                     }
                     else
                     {
                         sb.Append("," + prop.Name);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + prop.Name);
+                        sb.Append(DbHelperAsync.DbParmChar + prop.Name);
                     }
                 }
             }
-            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelper.DbParmChar + pkName);
+            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
             return sb;
         }
         /// <summary>
@@ -337,17 +340,17 @@ namespace Hexagon.Data.DataAccess
                         isFirstValue = false;
                         sb.Append(prop.Name);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + prop.Name);
+                        sb.Append(DbHelperAsync.DbParmChar + prop.Name);
                     }
                     else
                     {
                         sb.Append("," + prop.Name);
                         sb.Append("=");
-                        sb.Append(DbHelper.DbParmChar + prop.Name);
+                        sb.Append(DbHelperAsync.DbParmChar + prop.Name);
                     }
                 }
             }
-            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelper.DbParmChar + pkName);
+            sb.Append(" Where ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
             return sb;
         }
         #endregion
@@ -361,7 +364,7 @@ namespace Hexagon.Data.DataAccess
         /// <returns></returns>
         public static StringBuilder DeleteSql(string tableName, string pkName)
         {
-            return new StringBuilder("Delete From " + tableName + " Where " + pkName + " = " + DbHelper.DbParmChar + pkName + "");
+            return new StringBuilder("Delete From " + tableName + " Where " + pkName + " = " + DbHelperAsync.DbParmChar + pkName + "");
         }
         /// <summary>
         /// 拼接删除SQL语句
@@ -374,7 +377,7 @@ namespace Hexagon.Data.DataAccess
             StringBuilder sb = new StringBuilder("Delete From " + tableName + " Where 1=1");
             foreach (string key in ht.Keys)
             {
-                sb.Append(" AND " + key + " = " + DbHelper.DbParmChar + "" + key + "");
+                sb.Append(" AND " + key + " = " + DbHelperAsync.DbParmChar + "" + key + "");
             }
             return sb;
         }
@@ -392,7 +395,7 @@ namespace Hexagon.Data.DataAccess
             {
                 if (prop.GetValue(entity, null) != null)
                 {
-                    sb.Append(" AND " + prop.Name + " = " + DbHelper.DbParmChar + "" + prop.Name + "");
+                    sb.Append(" AND " + prop.Name + " = " + DbHelperAsync.DbParmChar + "" + prop.Name + "");
                 }
             }
             return sb;

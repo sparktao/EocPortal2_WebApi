@@ -14,9 +14,11 @@ namespace Hexagon.IService
 
         Task<List<Organization_Employee>> GetEmployeeList();
 
-        Task<Organization_Employee> GetEmployeeById(int id);
+        Task<Organization_Employee> GetEmployeeById(long id);
 
         Task<int> InsertEmployee(Organization_Employee employee);
+
+        Task<int> UpdateEmployee(Organization_Employee employee);
 
     }
 }
