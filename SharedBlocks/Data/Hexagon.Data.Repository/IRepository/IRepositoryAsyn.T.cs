@@ -28,12 +28,13 @@ namespace Hexagon.Data.Repository.IRepository
 
         Task<PaginatedList<T>> FindListPageBySql(string strSql, DbParameter[] parameters, Pagination pagination);
 
-        Task<T> FindEntityById(long id);
-        Task<T> FindEntityById(string id);
+        Task<T> FindEntityById(object id);
 
         Task<int> Insert(T entity);
 
         Task<int> Update(T entity);
+
+        Task<int> Delete(object id);
 
     }
 }

@@ -93,5 +93,12 @@ namespace Hexagon.Service
             //return await BaseRepositoryAsyn(conString).Update(employee);
 
         }
+
+        public async Task<int> DeleteEmployee(long employee_id)
+        {
+            return await BaseRepositoryAsyn(conString).Delete(employee_id);
+        }
+
+        
     }
 }

@@ -104,6 +104,21 @@ namespace webapi.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var employee = await _employeeSvr.GetEmployeeById(id);
+            if (employee == null)
+                return NotFound();
+
+            var result = await _employeeSvr.DeleteEmployee(id);
+            if (result > -1)
+                return Ok();
+
+            return NoContent();
+        }
+
 
     }
 }

@@ -20,5 +20,6 @@ namespace Hexagon.IService
 
         Task<int> UpdateEmployee(Organization_Employee employee);
 
+        Task<int> DeleteEmployee(long employee_id);
     }
 }
