@@ -28,7 +28,7 @@ namespace webapi.Controllers
         }
 
         //Get api/basemodule
-
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(typeof(List<Base_Module>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()

@@ -60,7 +60,6 @@ namespace webapi.Controllers
             return Ok(employeeList);
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
@@ -68,7 +67,6 @@ namespace webapi.Controllers
             return Ok(employee);
         }
 
-        [AllowAnonymous]
         //Post api/employee
         [HttpPost(Name = "CreateEmployee")]
         public async Task<IActionResult> Create(CreateOrgEmployeeDTO createEmployee) {
@@ -87,7 +85,6 @@ namespace webapi.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Organization_Employee postEmployee)
         {
@@ -104,7 +101,6 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
