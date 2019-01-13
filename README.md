@@ -8,8 +8,8 @@ select default project "SharedBlocks\Data\Hexagon.Data.EF"
 
 execute below command to initialize Sqlite database
 
-Add-Migration init
+  Add-Migration init
 
-update-database init
+  update-database init
 
 after that, the eoc.db database will be generate under root folder of the project "WebApp\webapi" 
