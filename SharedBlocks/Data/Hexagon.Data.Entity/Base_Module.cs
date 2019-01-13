@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Hexagon.Entity
+namespace Hexagon.Data.Entity
 {
     /// <summary>
     /// 模块设置
@@ -20,7 +20,7 @@ namespace Hexagon.Entity
     /// </summary>
     [Description("模块设置")]
     [PrimaryKey("ModuleId")]
-    public class Base_Module : BaseEntity
+    public class Base_Module
     {
         #region 获取/设置 字段值
         /// <summary>
@@ -28,6 +28,7 @@ namespace Hexagon.Entity
         /// </summary>
         /// <returns></returns>
         [DisplayName("模块主键")]
+        [Key]
         public string ModuleId { get; set; }
         /// <summary>
         /// 父级主键
@@ -175,28 +176,5 @@ namespace Hexagon.Entity
         public string ModifyUserName { get; set; }
         #endregion
 
-        #region 扩展操作
-        /// <summary>
-        /// 新增调用
-        /// </summary>
-        public override void Create()
-        {
-            //this.ModuleId = CommonHelper.GetGuid;
-            this.CreateDate = DateTime.Now;
-            //this.CreateUserId = ManageProvider.Provider.Current().UserId;
-            //this.CreateUserName = ManageProvider.Provider.Current().UserName;
-        }
-        /// <summary>
-        /// 编辑调用
-        /// </summary>
-        /// <param name="KeyValue"></param>
-        public override void Modify(string KeyValue)
-        {
-            //this.ModuleId = KeyValue;
-            this.ModifyDate = DateTime.Now;
-            //this.ModifyUserId = ManageProvider.Provider.Current().UserId;
-            //this.ModifyUserName = ManageProvider.Provider.Current().UserName;
-        }
-        #endregion
     }
 }

@@ -29,9 +29,9 @@ namespace Hexagon.Data.Repository.Repository
             return await db.ExecuteBySql(strSql, parameters);
         }
 
-        public async Task<List<T>> FindListBySql(string strSql)
+        public async Task<IEnumerable<T>> FindList(string strSql)
         {
-            return await db.FindListBySql<T>(strSql);
+            return await db.FindList<T>(strSql);
         }
 
         public async Task<PaginatedList<T>> FindListPageBySql(string strSql, Pagination pagination)
@@ -40,7 +40,7 @@ namespace Hexagon.Data.Repository.Repository
             string orderType = pagination.sord;
             int pageIndex = pagination.PageIndex;
             int pageSize = pagination.PageSize;
-            Tuple < int, List<T>> result = await db.FindListPageBySql<T>(strSql, orderField, orderType, pageIndex, pageSize);
+            Tuple < int, List<T>> result = await db.FindList<T>(strSql, orderField, orderType, pageIndex, pageSize);
 
             return new PaginatedList<T>(pageIndex, pageSize, result.Item1, result.Item2);
         }
@@ -51,7 +51,7 @@ namespace Hexagon.Data.Repository.Repository
             string orderType = pagination.sord;
             int pageIndex = pagination.PageIndex;
             int pageSize = pagination.PageSize;
-            Tuple<int, List<T>> result = await db.FindListPageBySql<T>(strSql, parameters, orderField, orderType, pageIndex, pageSize);
+            Tuple<int, List<T>> result = await db.FindList<T>(strSql, parameters, orderField, orderType, pageIndex, pageSize);
             return new PaginatedList<T>(pageIndex, pageSize, result.Item1, result.Item2);
         }
 

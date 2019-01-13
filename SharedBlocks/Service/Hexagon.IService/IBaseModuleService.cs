@@ -1,4 +1,4 @@
-﻿using Hexagon.Entity;
+﻿using Hexagon.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +8,7 @@ namespace Hexagon.IService
 {
     public interface IBaseModuleService
     {
-        Task<List<Base_Module>> GetModuleList();
+        Task<IEnumerable<Base_Module>> GetModuleList();
         Task<Base_Module> GetModuleById(string id);
     }
 }

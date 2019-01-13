@@ -6,8 +6,9 @@
 using Hexagon.Data.Attributes;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace Hexagon.Entity
+namespace Hexagon.Data.Entity
 {
     /// <summary>
     /// 通讯录管理
@@ -18,7 +19,7 @@ namespace Hexagon.Entity
     /// </summary>
     [Description("通讯录管理")]
     [PrimaryKey("EMPLOYEE_ID")]
-    public class Organization_Employee : BaseEntity
+    public class Organization_Employee
     {
         #region 获取/设置 字段值
         /// <summary>
@@ -26,6 +27,7 @@ namespace Hexagon.Entity
         /// </summary>
         /// <returns></returns>
         [DisplayName("联系人ID")]
+        [Key]
         public long Employee_Id { get; set; }
         /// <summary>
         /// 联系人姓名
@@ -185,26 +187,6 @@ namespace Hexagon.Entity
         /// <returns></returns>
         [DisplayName("头像")]
         public string HeadIcon { get; set; }
-        #endregion
-
-        #region 扩展操作
-        /// <summary>
-        /// 新增调用
-        /// </summary>
-        public override void Create()
-        {
-            //this.UserId = CommonHelper.GetGuid;
-            this.Created_Date = DateTime.Now;
-        }
-        /// <summary>
-        /// 编辑调用
-        /// </summary>
-        /// <param name="KeyValue"></param>
-        public override void Modify(string KeyValue)
-        {
-            //this.UserId = KeyValue;
-            this.Modified_Date = DateTime.Now;
-        }
         #endregion
     }
 }

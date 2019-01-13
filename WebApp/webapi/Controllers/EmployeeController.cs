@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Hexagon.Entity;
+using Hexagon.Data.Entity;
 using Hexagon.IService;
 using Hexagon.Util.WebControl;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +15,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -30,6 +30,7 @@ namespace webapi.Controllers
 
         // Get api/employee
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get([FromHeader] Pagination pagination) {
             //var employeeList = await _employeeSvr.GetEmployeeList();
             var employeeList = await _employeeSvr.GetPagedEmployeeList(pagination);

@@ -1,14 +1,11 @@
 ﻿
 using Hexagon.Data.Repository.IRepository;
 using Hexagon.Data.Repository.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hexagon.Data.Repository
 {
     /// <summary>
-    /// 版 本 6.1
-    /// Copyright (c) 2013-2016 上海力软信息技术有限公司
-    /// 创建人：佘赐雄
-    /// 日 期：2015.10.10
     /// 描 述：定义仓储模型工厂
     /// </summary>
     /// <typeparam name="T">动态实体类型</typeparam>
@@ -19,9 +16,14 @@ namespace Hexagon.Data.Repository
         /// </summary>
         /// <param name="connString">连接字符串</param>
         /// <returns></returns>
-        public IRepositoryAsyn<T> BaseRepositoryAsyn(string connString)
+        //public IRepositoryAsyn<T> BaseRepositoryAsyn(string connString)
+        //{
+        //    return new RepositoryAsyn<T>(DbFactory.BaseAsyn(connString, DatabaseType.SQLite));
+        //}
+
+        public IRepositoryAsyn<T> BaseRepositoryAsyn(DbContext dbContext)
         {
-            return new RepositoryAsyn<T>(DbFactory.BaseAsyn(connString, DatabaseType.Oracle));
+            return new RepositoryAsyn<T>(DbFactory.BaseAsyn(dbContext, DatabaseType.SQLite));
         }
 
 

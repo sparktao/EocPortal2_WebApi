@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hexagon.Data;
+using Hexagon.Data.EF;
+using Hexagon.Data.EF.Context;
 using Hexagon.IService;
 using Hexagon.Service;
 using IdentityServer4.AccessTokenValidation;
@@ -13,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -63,8 +67,13 @@ namespace webapi
                     options.ApiName = "restapi";
                 });
 
-            services.AddTransient<IOrgEmployee, OrgEmployee>();
-            services.AddTransient<IBaseModuleService, BaseModuleService>();
+            services.AddDbContext<SqliteDbContext>(options =>
+            {
+                options.UseSqlite("Data Source=eoc.db");
+            });
+
+            services.AddScoped<IOrgEmployee, OrgEmployee>();
+            services.AddScoped<IBaseModuleService, BaseModuleService>();
 
             //配置跨域
             services.AddCors(options => {

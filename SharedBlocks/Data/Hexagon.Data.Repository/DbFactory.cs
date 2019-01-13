@@ -1,4 +1,5 @@
-﻿using Hexagon.Data.DataAccess;
+﻿using Hexagon.Data.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Hexagon.Data.Repository
@@ -20,8 +21,14 @@ namespace Hexagon.Data.Repository
         /// <returns></returns>
         public static IDatabaseAsync BaseAsyn(string connString, DatabaseType DbType)
         {
+            return new DatabaseAsync(null);
+        }
+
+
+        public static IDatabaseAsync BaseAsyn(DbContext dbContext, DatabaseType DbType)
+        {
             DbHelperAsync.DbType = DbType;
-            return new DatabaseAsync(connString);
+            return new DatabaseAsync(dbContext);
         }
 
 

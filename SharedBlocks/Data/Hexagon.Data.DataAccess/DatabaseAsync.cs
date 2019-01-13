@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -117,20 +118,12 @@ namespace Hexagon.Data.DataAccess
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString());
         }
 
-        public async Task<int> ExecuteBySql(string strSql, DbTransaction isOpenTrans)
+        
+        public async Task<int> ExecuteBySql(string strSql, DbParameter[] dbParameter)
         {
-            return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString());
+            return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), dbParameter);
         }
-
-        public async Task<int> ExecuteBySql(string strSql, DbParameter[] parameters)
-        {
-            return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
-        }
-
-        public async Task<int> ExecuteBySql(string strSql, DbParameter[] parameters, DbTransaction isOpenTrans)
-        {
-            return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameters);
-        }
+        
         #endregion
         
         #region 执行存储过程
@@ -138,39 +131,18 @@ namespace Hexagon.Data.DataAccess
         {
             return await DbHelperAsync.ExecuteNonQuery(CommandType.StoredProcedure, procName);
         }
-        /// <summary>
-        /// 执行存储过程
-        /// </summary>
-        /// <param name="procName">存储过程</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> ExecuteByProc(string procName, DbTransaction isOpenTrans)
-        {
-            return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.StoredProcedure, procName);
-        }
-
+        
         /// <summary>
         /// 执行存储过程
         /// </summary>
         /// <param name="procName">存储过程</param>
         /// <param name="parameters">sql语句对应参数</param>
         /// <returns></returns>
-        public async Task<int> ExecuteByProc(string procName, DbParameter[] parameters)
+        public async Task<int> ExecuteByProc(string procName, DbParameter[] dbParameter)
         {
-            return await DbHelperAsync.ExecuteNonQuery(CommandType.StoredProcedure, procName, parameters);
+            return await DbHelperAsync.ExecuteNonQuery(CommandType.StoredProcedure, procName, dbParameter);
         }
-
-        /// <summary>
-        /// 执行存储过程
-        /// </summary>
-        /// <param name="procName">存储过程</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> ExecuteByProc(string procName, DbParameter[] parameters, DbTransaction isOpenTrans)
-        {
-            return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.StoredProcedure, procName, parameters);
-        }
+        
         #endregion
 
         #region 插入数据
@@ -179,7 +151,7 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         /// <param name="entity">实体类对象</param>
         /// <returns></returns>
-        public async Task<int> Insert<T>(T entity)
+        public async Task<int> Insert<T>(T entity) where T : class
         {
             object val = 0;
             StringBuilder strSql = DatabaseCommon.InsertSql<T>(entity);
@@ -187,34 +159,21 @@ namespace Hexagon.Data.DataAccess
             val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter);
             return Convert.ToInt32(val);
         }
-        /// <summary>
-        /// 插入数据
-        /// </summary>
-        /// <param name="entity">实体类对象</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Insert<T>(T entity, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.InsertSql<T>(entity);
-            DbParameter[] parameter = DatabaseCommon.GetParameter<T>(entity);
-            val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter);
-            return Convert.ToInt32(val);
-        }
+
         /// <summary>
         /// 批量插入数据
         /// </summary>
         /// <param name="entity">实体类对象</param>
         /// <returns></returns>
-        public async Task<int> Insert<T>(List<T> entity)
+        public async Task<int> Insert<T>(IEnumerable<T> entities) where T : class
         {
             object val = 0;
             DbTransaction isOpenTrans = await this.BeginTrans();
             try
             {
-                foreach (var item in entity)
+                foreach (var item in entities)
                 {
-                    await this.Insert<T>(item, isOpenTrans);
+                    await this.Insert<T>(item);
                 }
                 await this.Commit();
                 val = 1;
@@ -228,59 +187,7 @@ namespace Hexagon.Data.DataAccess
             }
             return Convert.ToInt32(val);
         }
-        /// <summary>
-        /// 批量插入数据
-        /// </summary>
-        /// <param name="entity">实体类对象</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Insert<T>(List<T> entity, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            try
-            {
-                foreach (var item in entity)
-                {
-                    await this.Insert<T>(item, isOpenTrans);
-                }
-                val = 1;
-            }
-            catch (Exception ex)
-            {
-                val = -1;
-                throw ex;
-            }
-            return Convert.ToInt32(val);
-        }
-        /// <summary>
-        /// 插入数据
-        /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="ht">哈希表键值</param>
-        /// <returns></returns>
-        public async Task<int> Insert(string tableName, Hashtable ht)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.InsertSql(tableName, ht);
-            DbParameter[] parameter = DatabaseCommon.GetParameter(ht);
-            val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter);
-            return Convert.ToInt32(val);
-        }
-        /// <summary>
-        /// 插入数据
-        /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="ht">哈希表键值</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Insert(string tableName, Hashtable ht, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.InsertSql(tableName, ht);
-            DbParameter[] parameter = DatabaseCommon.GetParameter(ht);
-            val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter);
-            return Convert.ToInt32(val);
-        }
+
         #endregion
         
         #region 修改数据
@@ -289,7 +196,7 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        public async Task<int> Update<T>(T entity)
+        public async Task<int> Update<T>(T entity) where T : class
         {
             object val = 0;
             StringBuilder strSql = DatabaseCommon.UpdateSql<T>(entity);
@@ -297,20 +204,7 @@ namespace Hexagon.Data.DataAccess
             val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), ReGenerateDbParameterArray(parameter));
             return Convert.ToInt32(val);
         }
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Update<T>(T entity, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.UpdateSql<T>(entity);
-            DbParameter[] parameter = DatabaseCommon.GetParameter<T>(entity);
-            val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), ReGenerateDbParameterArray(parameter));
-            return Convert.ToInt32(val);
-        }
+       
 
         private DbParameter[] ReGenerateDbParameterArray(DbParameter[] parameter)
         {
@@ -324,65 +218,21 @@ namespace Hexagon.Data.DataAccess
 
             return list.ToArray();
         }
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="propertyName">实体属性名称</param>
-        /// <param name="propertyValue">字段值</param>
-        /// <returns></returns>
-        public async Task<int> Update<T>(string propertyName, string propertyValue)
-        {
-            object val = 0;
-            StringBuilder strSql = new StringBuilder();
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Update ");
-            sb.Append(typeof(T).Name);
-            sb.Append(" Set ");
-            sb.Append(propertyName);
-            sb.Append("=");
-            sb.Append(DbHelperAsync.DbParmChar + propertyName);
-            IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
-            val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
-            return Convert.ToInt32(val);
-        }
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="propertyName">实体属性名称</param>
-        /// <param name="propertyValue">字段值</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Update<T>(string propertyName, string propertyValue, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            StringBuilder strSql = new StringBuilder();
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Update ");
-            sb.Append(typeof(T).Name);
-            sb.Append(" Set ");
-            sb.Append(propertyName);
-            sb.Append("=");
-            sb.Append(DbHelperAsync.DbParmChar + propertyName);
-            IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
-            val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
-            return Convert.ToInt32(val);
-        }
+        
         /// <summary>
         /// 批量修改数据
         /// </summary>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        public async Task<int> Update<T>(List<T> entity)
+        public async Task<int> Update<T>(IEnumerable<T> entities) where T : class
         {
             object val = 0;
             DbTransaction isOpenTrans = await this.BeginTrans();
             try
             {
-                foreach (var item in entity)
+                foreach (var item in entities)
                 {
-                    await this.Update<T>(item, isOpenTrans);
+                    await this.Update<T>(item);
                 }
                 await this.Commit();
                 val = 1;
@@ -396,61 +246,12 @@ namespace Hexagon.Data.DataAccess
             }
             return Convert.ToInt32(val);
         }
-        /// <summary>
-        /// 批量修改数据
-        /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Update<T>(List<T> entity, DbTransaction isOpenTrans)
+
+        public async Task<int> Update<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
-            object val = 0;
-            try
-            {
-                foreach (var item in entity)
-                {
-                    await this.Update<T>(item, isOpenTrans);
-                }
-                val = 1;
-            }
-            catch (Exception ex)
-            {
-                val = -1;
-                throw ex;
-            }
-            return Convert.ToInt32(val);
+            return 0;
         }
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="ht">哈希表键值</param>
-        /// <param name="propertyName">主键字段</param>
-        /// <returns></returns>
-        public async Task<int> Update(string tableName, Hashtable ht, string propertyName)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.UpdateSql(tableName, ht, propertyName);
-            DbParameter[] parameter = DatabaseCommon.GetParameter(ht);
-            val = await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter);
-            return Convert.ToInt32(val);
-        }
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="ht">哈希表键值</param>
-        /// <param name="propertyName">主键字段</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Update(string tableName, Hashtable ht, string propertyName, DbTransaction isOpenTrans)
-        {
-            object val = 0;
-            StringBuilder strSql = DatabaseCommon.UpdateSql(tableName, ht, propertyName);
-            DbParameter[] parameter = DatabaseCommon.GetParameter(ht);
-            val = await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter);
-            return Convert.ToInt32(val);
-        }
+
         #endregion
 
         #region 删除数据
@@ -459,36 +260,31 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         /// <param name="entity">实体类</param>
         /// <returns></returns>
-        public async Task<int> Delete<T>(T entity)
+        public async Task<int> Delete<T>(T entity) where T : class
         {
             StringBuilder strSql = DatabaseCommon.DeleteSql(entity);
             DbParameter[] parameter = DatabaseCommon.GetParameter<T>(entity);
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter);
         }
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="entity">实体类</param>
-        /// <param name="isOpenTrans">事务对象</param>
-        /// <returns></returns>
-        public async Task<int> Delete<T>(T entity, DbTransaction isOpenTrans)
+
+        public async Task<int> Delete<T>(IEnumerable<T> entities) where T : class
         {
-            StringBuilder strSql = DatabaseCommon.DeleteSql(entity);
-            DbParameter[] parameter = DatabaseCommon.GetParameter<T>(entity);
-            return await DbHelperAsync.ExecuteNonQuery(isOpenTrans, CommandType.Text, strSql.ToString(), parameter.ToArray());
+            throw new NotImplementedException();
+
         }
+
         /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="propertyValue">主键值</param>
         /// <returns></returns>
-        public async Task<int> Delete<T>(object propertyValue)
+        public async Task<int> Delete<T>(object keyValue)
         {
             string tableName = typeof(T).Name;//获取表名
             string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键
             StringBuilder strSql = DatabaseCommon.DeleteSql(tableName, pkName);
             IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
+            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, keyValue));
             return await DbHelperAsync.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameter.ToArray());
         }
         /// <summary>
@@ -861,50 +657,10 @@ namespace Hexagon.Data.DataAccess
         /// 查询数据列表、返回List
         /// </summary>
         /// <returns></returns>
-        public async Task<List<T>> FindList<T>() where T : new()
+        public async Task<IEnumerable<T>> FindList<T>() where T : class, new()
         {
             StringBuilder strSql = DatabaseCommon.SelectSql<T>();
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToList<T>(dr);
-        }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="propertyName">实体属性名称</param>
-        /// <param name="propertyValue">字段值</param>
-        /// <returns></returns>
-        public async Task<List<T>> FindList<T>(string propertyName, string propertyValue) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(" AND " + propertyName + " = " + DbHelperAsync.DbParmChar + propertyName);
-            IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + propertyName, propertyValue));
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
-            return await DatabaseReader.ReaderToList<T>(dr);
-        }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <returns></returns>
-        public async Task<List<T>> FindList<T>(string WhereSql) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToList<T>(dr);
-        }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <returns></returns>
-        public async Task<List<T>> FindList<T>(string WhereSql, DbParameter[] parameters) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameters);
             return await DatabaseReader.ReaderToList<T>(dr);
         }
 
@@ -913,7 +669,7 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         /// <param name="strSql">Sql语句</param>
         /// <returns></returns>
-        public async Task<List<T>> FindListBySql<T>(string strSql)
+        public async Task<IEnumerable<T>> FindList<T>(string strSql) where T : class
         {
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
             return await DatabaseReader.ReaderToList<T>(dr);
@@ -925,58 +681,12 @@ namespace Hexagon.Data.DataAccess
         /// <param name="strSql">Sql语句</param>
         /// <param name="parameters">sql语句对应参数</param>
         /// <returns></returns>
-        public async Task<List<T>> FindListBySql<T>(string strSql, DbParameter[] parameters)
+        public async Task<IEnumerable<T>> FindList<T>(string strSql, DbParameter[] parameters) where T : class
         {
             DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameters);
             return await DatabaseReader.ReaderToList<T>(dr);
         }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="orderField">排序字段</param>
-        /// <param name="orderType">排序类型</param>
-        /// <param name="pageIndex">当前页</param>
-        /// <param name="pageSize">页大小</param>
-        /// <param name="recordCount">返回查询条数</param>
-        /// <returns>recordCount, recordList</returns>
-        public async Task<Tuple<int, List<T>>> FindListPage<T>(string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            return await SqlServerHelper.GetPageListAsync<T>(strSql.ToString(), orderField, orderType, pageIndex, pageSize);
-        }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <param name="orderField">排序字段</param>
-        /// <param name="orderType">排序类型</param>
-        /// <param name="pageIndex">当前页</param>
-        /// <param name="pageSize">页大小</param>
-        /// <param name="recordCount">返回查询条数</param>
-        /// <returns></returns>
-        public async Task<Tuple<int, List<T>>> FindListPage<T>(string WhereSql, string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(WhereSql);
-            return await SqlServerHelper.GetPageListAsync<T>(strSql.ToString(), orderField, orderType, pageIndex, pageSize);
-        }
-        /// <summary>
-        /// 查询数据列表、返回List
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <param name="orderField">排序字段</param>
-        /// <param name="orderType">排序类型</param>
-        /// <param name="pageIndex">当前页</param>
-        /// <param name="pageSize">页大小</param>
-        /// <param name="recordCount">返回查询条数</param>
-        /// <returns>recordCount , RecordList</returns>
-        public async Task<Tuple<int, List<T>>> FindListPage<T>(string WhereSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>();
-            strSql.Append(WhereSql);
-            return await SqlServerHelper.GetPageListAsync<T>(strSql.ToString(), parameters, orderField, orderType, pageIndex, pageSize);
-        }
+        
         /// <summary>
         /// 查询数据列表、返回List
         /// </summary>
@@ -1015,44 +725,7 @@ namespace Hexagon.Data.DataAccess
         #endregion
 
         #region 查询数据列表、返回DataTable
-        /// <summary>
-        /// 查询数据列表、返回 DataTable
-        /// </summary>
-        /// <param name="Top">显示条数</param>
-        /// <returns></returns>
-        public async Task<DataTable> FindTableTop<T>(int Top) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(Top);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToDataTableAsync(dr);
-        }
-        /// <summary>
-        /// 查询数据列表、返回 DataTable
-        /// </summary>
-        /// <param name="Top">显示条数</param>
-        /// <param name="WhereSql">条件</param>
-        /// <returns></returns>
-        public async Task<DataTable> FindTableTop<T>(int Top, string WhereSql) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(Top);
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToDataTableAsync(dr);
-        }
-        /// <summary>
-        /// 查询数据列表、返回 DataTable
-        /// </summary>
-        /// <param name="Top">显示条数</param>
-        /// <param name="WhereSql">条件</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <returns></returns>
-        public async Task<DataTable> FindTableTop<T>(int Top, string WhereSql, DbParameter[] parameters) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(Top);
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameters);
-            return await DatabaseReader.ReaderToDataTableAsync(dr);
-        }
+        
         /// <summary>
         /// 查询数据列表、返回 DataTable
         /// </summary>
@@ -1225,77 +898,22 @@ namespace Hexagon.Data.DataAccess
         /// </summary>
         /// <param name="propertyValue">主键值</param>
         /// <returns></returns>
-        public async Task<T> FindEntity<T>(object propertyValue) where T : new()
+        public async Task<T> FindEntity<T>(object keyValue) where T : class
         {
-            string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键字段
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
-            IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
+            //string pkName = DatabaseCommon.GetKeyField<T>().ToString();//获取主键字段
+            //StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
+            //strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
+            //IList<DbParameter> parameter = new List<DbParameter>();
+            //parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, keyValue));
+            //DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
+            //return await DatabaseReader.ReaderToModelAsync<T>(dr);
+
+            throw new NotImplementedException();
         }
-        /// <summary>
-        /// 查询对象、返回实体
-        /// </summary>
-        /// <param name="propertyName">实体属性名称</param>
-        /// <param name="propertyValue">字段值</param>
-        /// <returns></returns>
-        public async Task<T> FindEntity<T>(string propertyName, object propertyValue) where T : new()
+
+        public async Task<T> FindEntity<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
-            string pkName = propertyName;
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(" AND ").Append(pkName).Append("=").Append(DbHelperAsync.DbParmChar + pkName);
-            IList<DbParameter> parameter = new List<DbParameter>();
-            parameter.Add(DbFactory.CreateDbParameter(DbHelperAsync.DbParmChar + pkName, propertyValue));
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameter.ToArray());
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
-        }
-        /// <summary>
-        /// 查询对象、返回实体
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <returns></returns>
-        public async Task<T> FindEntityByWhere<T>(string WhereSql) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
-        }
-        /// <summary>
-        /// 查询对象、返回实体
-        /// </summary>
-        /// <param name="WhereSql">条件</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <returns></returns>
-        public async Task<T> FindEntityByWhere<T>(string WhereSql, DbParameter[] parameters) where T : new()
-        {
-            StringBuilder strSql = DatabaseCommon.SelectSql<T>(1);
-            strSql.Append(WhereSql);
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameters);
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
-        }
-        /// <summary>
-        /// 查询对象、返回实体
-        /// </summary>
-        /// <param name="strSql">Sql语句</param>
-        /// <returns></returns>
-        public async Task<T> FindEntityBySql<T>(string strSql)
-        {
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString());
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
-        }
-        /// <summary>
-        /// 查询对象、返回实体
-        /// </summary>
-        /// <param name="strSql">Sql语句</param>
-        /// <param name="parameters">sql语句对应参数</param>
-        /// <returns></returns>
-        public async Task<T> FindEntityBySql<T>(string strSql, DbParameter[] parameters)
-        {
-            DbDataReader dr = await DbHelperAsync.ExecuteReader(CommandType.Text, strSql.ToString(), parameters);
-            return await DatabaseReader.ReaderToModelAsync<T>(dr);
+            throw new NotImplementedException();
         }
         #endregion
 

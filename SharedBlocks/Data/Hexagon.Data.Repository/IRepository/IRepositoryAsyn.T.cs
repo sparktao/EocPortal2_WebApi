@@ -22,7 +22,7 @@ namespace Hexagon.Data.Repository.IRepository
 
         Task<int> ExecuteBySql(string strSql, DbParameter[] parameters);
 
-        Task<List<T>> FindListBySql(string strSql);
+        Task<IEnumerable<T>> FindList(string strSql);
 
         Task<PaginatedList<T>> FindListPageBySql(string strSql, Pagination pagination);
 

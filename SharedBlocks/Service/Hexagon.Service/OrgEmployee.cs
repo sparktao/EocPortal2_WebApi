@@ -1,5 +1,4 @@
 ﻿using Hexagon.Data.Repository;
-using Hexagon.Entity;
 using Hexagon.IService;
 using System;
 using System.Collections.Generic;
@@ -11,26 +10,32 @@ using System.Data.Common;
 using Oracle.ManagedDataAccess.Client;
 using Hexagon.Util.WebControl;
 using System.Data;
+using Hexagon.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using Hexagon.Data.EF.Context;
 
 namespace Hexagon.Service
 {
     public class OrgEmployee : RepositoryFactory<Organization_Employee>, IOrgEmployee
     {
         private string conString;
-        public OrgEmployee(IConfiguration paramConfiguration)
+        private readonly DbContext _dbContext;
+        public OrgEmployee(IConfiguration paramConfiguration, SqliteDbContext dbContext)
         {
             if (paramConfiguration != null)
             {
                 conString = paramConfiguration.GetConnectionString("OracleConnectionString");
             }
+
+            _dbContext = dbContext;
         }
 
         public async Task<Organization_Employee> GetEmployeeById(long id)
         {
-            return await BaseRepositoryAsyn(conString).FindEntityById(id);
+            return await BaseRepositoryAsyn(_dbContext).FindEntityById(id);
         }
 
-        public async Task<List<Organization_Employee>> GetEmployeeList()
+        public async Task<IEnumerable<Organization_Employee>> GetEmployeeList()
         {
             string sql = "select * from Organization_Employee where rownum < 10";
             //string conString = "User Id=cad93;Password=cad93;" +
@@ -38,13 +43,13 @@ namespace Hexagon.Service
             //    //How to connect to an Oracle DB without SQL*Net configuration file
             //    //  also known as tnsnames.ora.
             //    "Data Source=192.168.48.30:1521/cad93;";
-            return await BaseRepositoryAsyn(conString).FindListBySql(sql);
+            return await BaseRepositoryAsyn(_dbContext).FindList(sql);
         }
 
         public async Task<PaginatedList<Organization_Employee>> GetPagedEmployeeList(Pagination pagination)
         {
             string sqlClause = @"select * from organization_employee";
-            return await BaseRepositoryAsyn(conString).FindListPageBySql(sqlClause, pagination);
+            return await BaseRepositoryAsyn(_dbContext).FindListPageBySql(sqlClause, pagination);
         }
 
         public async Task<int> InsertEmployee(Organization_Employee employee)
@@ -64,7 +69,7 @@ namespace Hexagon.Service
             parameters.Add(new OracleParameter("email", employee.Email));
             parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
 
-            return await BaseRepositoryAsyn(conString).ExecuteBySql(sql, parameters.ToArray());
+            return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
 
         }
 
@@ -88,7 +93,7 @@ namespace Hexagon.Service
             parameters.Add(new OracleParameter("email", employee.Email));
             parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
 
-            return await BaseRepositoryAsyn(conString).ExecuteBySql(sql, parameters.ToArray());
+            return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
 
             //return await BaseRepositoryAsyn(conString).Update(employee);
 
@@ -96,7 +101,7 @@ namespace Hexagon.Service
 
         public async Task<int> DeleteEmployee(long employee_id)
         {
-            return await BaseRepositoryAsyn(conString).Delete(employee_id);
+            return await BaseRepositoryAsyn(_dbContext).Delete(employee_id);
         }
 
         

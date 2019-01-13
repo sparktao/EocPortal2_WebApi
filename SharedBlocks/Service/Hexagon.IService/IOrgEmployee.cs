@@ -1,4 +1,4 @@
-﻿using Hexagon.Entity;
+﻿using Hexagon.Data.Entity;
 using Hexagon.Util.WebControl;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Hexagon.IService
 
         Task<PaginatedList<Organization_Employee>> GetPagedEmployeeList(Pagination pagination);
 
-        Task<List<Organization_Employee>> GetEmployeeList();
+        Task<IEnumerable<Organization_Employee>> GetEmployeeList();
 
         Task<Organization_Employee> GetEmployeeById(long id);
 

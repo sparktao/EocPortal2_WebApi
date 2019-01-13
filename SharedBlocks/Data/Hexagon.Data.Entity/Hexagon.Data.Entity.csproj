@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hexagon.Data.EF\Hexagon.Data.EF.csproj" />
     <ProjectReference Include="..\Hexagon.Data\Hexagon.Data.csproj" />
-    <ProjectReference Include="..\..\Util\Hexagon.Util\Hexagon.Util.csproj" />
   </ItemGroup>
 
 </Project>
