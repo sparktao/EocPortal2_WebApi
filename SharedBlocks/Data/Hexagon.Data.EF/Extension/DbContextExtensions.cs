@@ -68,11 +68,16 @@ namespace Hexagon.Data.EF.Extension
         //public static EntitySet GetEntitySet<T>(DbContext dbcontext) where T : class
         //{
         //    var metadata = ((IObjectContextAdapter)dbcontext).ObjectContext.MetadataWorkspace;
+
+        //    dbcontext.Model.
+
         //    string strname = typeof(T).Name;
+
         //    var tables = metadata.GetItemCollection(DataSpace.SSpace)
         //        .GetItems<EntityContainer>().Single().BaseEntitySets.OfType<EntitySet>()
         //        .Where(s => !s.MetadataProperties.Contains("Type")
         //            || s.MetadataProperties["Type"].ToString() == "Tables");
+
         //    foreach (var table in tables)
         //    {
         //        if (table.MetadataProperties["Name"].Value.ToString() == strname)

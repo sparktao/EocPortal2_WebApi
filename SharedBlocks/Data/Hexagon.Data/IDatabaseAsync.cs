@@ -39,20 +39,12 @@ namespace Hexagon.Data
         #region 删除数据
 
         Task<int> Delete<T>(T entity) where T : class;
-
         Task<int> Delete<T>(IEnumerable<T> entities) where T : class;
-        Task<int> Delete<T>(object keyValue);
-        Task<int> Delete<T>(object propertyValue, DbTransaction isOpenTrans);
+        Task<int> Delete<T>(Expression<Func<T, bool>> condition) where T : class, new();
+        Task<int> Delete<T>(object keyValue) where T : class;
+        Task<int> Delete<T>(object[] KeyValue) where T : class;
         Task<int> Delete<T>(string propertyName, string propertyValue);
-        Task<int> Delete<T>(string propertyName, string propertyValue, DbTransaction isOpenTrans);
-        Task<int> Delete(string tableName, string propertyName, string propertyValue);
-        Task<int> Delete(string tableName, string propertyName, string propertyValue, DbTransaction isOpenTrans);
-        Task<int> Delete<T>(object[] propertyValue);
-        Task<int> Delete<T>(object[] propertyValue, DbTransaction isOpenTrans);
-        Task<int> Delete<T>(string propertyName, object[] propertyValue);
-        Task<int> Delete<T>(string propertyName, object[] propertyValue, DbTransaction isOpenTrans);
-        Task<int> Delete(string tableName, string propertyName, object[] propertyValue);
-        Task<int> Delete(string tableName, string propertyName, object[] propertyValue, DbTransaction isOpenTrans);
+
         #endregion
 
         #region 查询数据列表、返回List
@@ -66,18 +58,10 @@ namespace Hexagon.Data
 
         #region 查询数据列表、DataTable
 
-        Task<DataTable> FindTable<T>() where T : new();
-        Task<DataTable> FindTable<T>(string WhereSql) where T : new();
-        Task<DataTable> FindTable<T>(string WhereSql, DbParameter[] parameters) where T : new();
-        Task<DataTable> FindTableBySql(string strSql);
-        Task<DataTable> FindTableBySql(string strSql, DbParameter[] parameters);
-        Task<Tuple<int, DataTable>> FindTablePage<T>(string orderField, string orderType, int pageIndex, int pageSize) where T : new();
-        Task<Tuple<int, DataTable>> FindTablePage<T>(string WhereSql, string orderField, string orderType, int pageIndex, int pageSize) where T : new();
-        Task<Tuple<int, DataTable>> FindTablePage<T>(string WhereSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize) where T : new();
-        Task<Tuple<int, DataTable>> FindTablePageBySql(string strSql, string orderField, string orderType, int pageIndex, int pageSize);
-        Task<Tuple<int, DataTable>> FindTablePageBySql(string strSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize);
-        Task<DataTable> FindTableByProc(string procName);
-        Task<DataTable> FindTableByProc(string procName, DbParameter[] parameters);
+        Task<DataTable> FindTable(string strSql);
+        Task<DataTable> FindTable(string strSql, DbParameter[] dbParameter);
+        Task<Tuple<int, DataTable>> FindTable(string strSql, string orderField, string orderType, int pageIndex, int pageSize);
+        Task<Tuple<int, DataTable>> FindTable(string strSql, DbParameter[] dbParameter, string orderField, string orderType, int pageIndex, int pageSize);
 
         #endregion
 

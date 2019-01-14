@@ -239,76 +239,39 @@ namespace Hexagon.Data.EF
             return dbTransaction == null ? await this.Commit() : 0;
         }
 
-        public Task<int> Delete<T>(object keyValue)
+        public async Task<int> Delete<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
-            //EntitySet entitySet = DbContextExtensions.GetEntitySet<T>(dbcontext);
-            //if (entitySet != null)
-            //{
-            //    string tableName = entitySet.MetadataProperties.Contains("Table") && entitySet.MetadataProperties["Table"].Value != null
-            //                   ? entitySet.MetadataProperties["Table"].Value.ToString()
-            //                   : entitySet.Name;
-            //    string keyFlied = entitySet.ElementType.KeyMembers[0].Name;
-            //    return this.ExecuteBySql(DbContextExtensions.DeleteSql(tableName, keyFlied, keyValue));
-            //}
-            //return -1;
-
-            throw new NotImplementedException();
+            IEnumerable<T> entities = await dbcontext.Set<T>().Where(condition).ToListAsync();
+            return entities.Count() > 0 ? await Delete(entities) : 0;
         }
 
-        public Task<int> Delete<T>(object propertyValue, DbTransaction isOpenTrans)
+        public Task<int> Delete<T>(object keyValue) where T : class
         {
-            throw new NotImplementedException();
+            var mapping = dbcontext.Model.FindEntityType(typeof(T).FullName).Relational();
+            string tableName = mapping.TableName;
+            string keyFlied = dbcontext.Model.FindEntityType(typeof(T)).FindPrimaryKey()
+                    .Properties.Select(x => x.Name).Single();
+
+            return this.ExecuteBySql(DbContextExtensions.DeleteSql(tableName, keyFlied, keyValue));
+        }
+
+        public Task<int> Delete<T>(object[] keyValue) where T : class
+        {
+            var mapping = dbcontext.Model.FindEntityType(typeof(T).FullName).Relational();
+            string tableName = mapping.TableName;
+            string keyFlied = dbcontext.Model.FindEntityType(typeof(T)).FindPrimaryKey()
+                    .Properties.Select(x => x.Name).Single();
+
+            return this.ExecuteBySql(DbContextExtensions.DeleteSql(tableName, keyFlied, keyValue));
         }
 
         public Task<int> Delete<T>(string propertyName, string propertyValue)
         {
-            throw new NotImplementedException();
-        }
+            var mapping = dbcontext.Model.FindEntityType(typeof(T).FullName).Relational();
+            string tableName = mapping.TableName;
 
-        public Task<int> Delete<T>(string propertyName, string propertyValue, DbTransaction isOpenTrans)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(string tableName, string propertyName, string propertyValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(string tableName, string propertyName, string propertyValue, DbTransaction isOpenTrans)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete<T>(object[] propertyValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete<T>(object[] propertyValue, DbTransaction isOpenTrans)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete<T>(string propertyName, object[] propertyValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete<T>(string propertyName, object[] propertyValue, DbTransaction isOpenTrans)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(string tableName, string propertyName, object[] propertyValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(string tableName, string propertyName, object[] propertyValue, DbTransaction isOpenTrans)
-        {
-            throw new NotImplementedException();
-        }
+            return this.ExecuteBySql(DbContextExtensions.DeleteSql(tableName, propertyName, propertyValue));
+        }        
 
         #endregion
 
@@ -354,67 +317,43 @@ namespace Hexagon.Data.EF
 
         #endregion
 
-        public Task<DataTable> FindTable<T>() where T : new()
+        #region 查询数据列表、DataTable
+
+        public async Task<DataTable> FindTable(string strSql)
         {
-            throw new NotImplementedException();
+            return await FindTable(strSql, null);
         }
 
-        public Task<DataTable> FindTable<T>(string WhereSql) where T : new()
+        public async Task<DataTable> FindTable(string strSql, DbParameter[] dbParameter)
         {
-            throw new NotImplementedException();
+            using (var dbConnection = dbcontext.Database.GetDbConnection())
+            {
+                var IDataReader = await new DbHelperAsync(dbConnection).ExecuteReader(CommandType.Text, strSql, dbParameter);
+                return ConvertExtension.IDataReaderToDataTable(IDataReader);
+            }
         }
 
-        public Task<DataTable> FindTable<T>(string WhereSql, DbParameter[] parameters) where T : new()
+        public async Task<Tuple<int, DataTable>> FindTable(string strSql, string orderField, string orderType, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            return await FindTable(strSql, null, orderField, orderType, pageIndex, pageSize);
         }
 
-        public Task<DataTable> FindTableByProc(string procName)
+        public async Task<Tuple<int, DataTable>> FindTable(string strSql, DbParameter[] dbParameter, string orderField, string orderType, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            using (DbConnection dbConnection = dbcontext.Database.GetDbConnection())
+            {
+                if (DbHelperAsync.DbType == DatabaseType.SQLite)
+                {
+                    return await new SqliteHelper().GetPageTableAsync(dbConnection, strSql, dbParameter, orderField, orderType, pageIndex, pageSize);
+                }
+                else
+                {
+                    return await SqlServerHelper.GetPageTableAsync(dbConnection, strSql, dbParameter, orderField, orderType, pageIndex, pageSize);
+                }
+            }
         }
 
-        public Task<DataTable> FindTableByProc(string procName, DbParameter[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DataTable> FindTableBySql(string strSql)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DataTable> FindTableBySql(string strSql, DbParameter[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tuple<int, DataTable>> FindTablePage<T>(string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tuple<int, DataTable>> FindTablePage<T>(string WhereSql, string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tuple<int, DataTable>> FindTablePage<T>(string WhereSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize) where T : new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tuple<int, DataTable>> FindTablePageBySql(string strSql, string orderField, string orderType, int pageIndex, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tuple<int, DataTable>> FindTablePageBySql(string strSql, DbParameter[] parameters, string orderField, string orderType, int pageIndex, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-
+        #endregion
 
         #region 查询对象、返回实体
         /// <summary>
