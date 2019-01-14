@@ -62,6 +62,7 @@ namespace webapi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(long id)
         {
             var employee = await _employeeSvr.GetEmployeeById(id);
@@ -70,9 +71,11 @@ namespace webapi.Controllers
 
         //Post api/employee
         [HttpPost(Name = "CreateEmployee")]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(CreateOrgEmployeeDTO createEmployee) {
 
             Organization_Employee employee = new Organization_Employee() {
+                Employee_Id = createEmployee.employee_Id,
                 Employee_Name = createEmployee.employee_Name,
                 Gender = createEmployee.gender,
                 Birthday = createEmployee.birthday,
@@ -87,6 +90,7 @@ namespace webapi.Controllers
         }
 
         [HttpPut]
+        [AllowAnonymous]
         public async Task<IActionResult> Update([FromBody] Organization_Employee postEmployee)
         {
             if (postEmployee == null)
@@ -103,6 +107,7 @@ namespace webapi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(long id)
         {
             var employee = await _employeeSvr.GetEmployeeById(id);

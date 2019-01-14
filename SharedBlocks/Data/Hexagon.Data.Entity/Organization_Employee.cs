@@ -27,7 +27,6 @@ namespace Hexagon.Data.Entity
         /// </summary>
         /// <returns></returns>
         [DisplayName("联系人ID")]
-        [Key]
         public long Employee_Id { get; set; }
         /// <summary>
         /// 联系人姓名

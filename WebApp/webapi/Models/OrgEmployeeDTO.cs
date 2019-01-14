@@ -11,6 +11,8 @@ namespace webapi.Models
 
     public class CreateOrgEmployeeDTO
     {
+
+        public long employee_Id;
         /// 联系人姓名
         public string employee_Name;
         /// 性别

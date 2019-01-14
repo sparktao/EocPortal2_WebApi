@@ -54,48 +54,50 @@ namespace Hexagon.Service
 
         public async Task<int> InsertEmployee(Organization_Employee employee)
         {
-            string sql = @"insert into organization_employee(
-                                employee_id, employee_name, gender, birthday, contact_phone, email, 
-                                organization_id, created_date, modified_date, isvalid)
-                            values(seq_org_employee.nextval, :employee_name, :gender, :birthday, :contact_phone, :email,
-                                  17, sysdate, sysdate, :isvalid)";
+            //string sql = @"insert into organization_employee(
+            //                    employee_id, employee_name, gender, birthday, contact_phone, email, 
+            //                    organization_id, created_date, modified_date, isvalid)
+            //                values(seq_org_employee.nextval, :employee_name, :gender, :birthday, :contact_phone, :email,
+            //                      17, sysdate, sysdate, :isvalid)";
 
-            List<DbParameter> parameters = new List<DbParameter>();
-            parameters.Add(new OracleParameter("employee_name",  employee.Employee_Name));
-            parameters.Add(new OracleParameter("gender", employee.Gender));
+            //List<DbParameter> parameters = new List<DbParameter>();
+            //parameters.Add(new OracleParameter("employee_name",  employee.Employee_Name));
+            //parameters.Add(new OracleParameter("gender", employee.Gender));
 
-            parameters.Add(new OracleParameter("birthday", employee.Birthday));
-            parameters.Add(new OracleParameter("contact_phone", employee.Contact_Phone));
-            parameters.Add(new OracleParameter("email", employee.Email));
-            parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
+            //parameters.Add(new OracleParameter("birthday", employee.Birthday));
+            //parameters.Add(new OracleParameter("contact_phone", employee.Contact_Phone));
+            //parameters.Add(new OracleParameter("email", employee.Email));
+            //parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
 
-            return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
+            //return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
+
+            return await BaseRepositoryAsyn(_dbContext).Insert(employee);
 
         }
 
         public async Task<int> UpdateEmployee(Organization_Employee employee)
         {
-            string sql = string.Format(@"update organization_employee set
-                                employee_name = :employee_name, 
-                                gender = :gender, 
-                                birthday = :birthday,
-                                contact_phone = :contact_phone, 
-                                email = :email, 
-                                modified_date = sysdate,
-                                isvalid = :isvalid where employee_id = {0}", employee.Employee_Id);
+            //string sql = string.Format(@"update organization_employee set
+            //                    employee_name = :employee_name, 
+            //                    gender = :gender, 
+            //                    birthday = :birthday,
+            //                    contact_phone = :contact_phone, 
+            //                    email = :email, 
+            //                    modified_date = sysdate,
+            //                    isvalid = :isvalid where employee_id = {0}", employee.Employee_Id);
 
-            List<DbParameter> parameters = new List<DbParameter>();
-            parameters.Add(new OracleParameter("employee_name", employee.Employee_Name));
-            parameters.Add(new OracleParameter("gender", employee.Gender));
+            //List<DbParameter> parameters = new List<DbParameter>();
+            //parameters.Add(new OracleParameter("employee_name", employee.Employee_Name));
+            //parameters.Add(new OracleParameter("gender", employee.Gender));
 
-            parameters.Add(new OracleParameter("birthday", employee.Birthday));
-            parameters.Add(new OracleParameter("contact_phone", employee.Contact_Phone));
-            parameters.Add(new OracleParameter("email", employee.Email));
-            parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
+            //parameters.Add(new OracleParameter("birthday", employee.Birthday));
+            //parameters.Add(new OracleParameter("contact_phone", employee.Contact_Phone));
+            //parameters.Add(new OracleParameter("email", employee.Email));
+            //parameters.Add(new OracleParameter("isvalid", employee.Isvalid));
 
-            return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
+            //return await BaseRepositoryAsyn(_dbContext).ExecuteBySql(sql, parameters.ToArray());
 
-            //return await BaseRepositoryAsyn(conString).Update(employee);
+            return await BaseRepositoryAsyn(_dbContext).Update(employee);
 
         }
 

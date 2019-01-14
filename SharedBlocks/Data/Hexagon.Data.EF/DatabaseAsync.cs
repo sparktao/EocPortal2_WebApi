@@ -13,6 +13,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hexagon.Data.EF
@@ -182,6 +183,10 @@ namespace Hexagon.Data.EF
         {
             dbcontext.Set<T>().Attach(entity);
             Hashtable props = ConvertExtension.GetPropertyInfo<T>(entity);
+            //获取主键属性名称
+            var primarykeyName = dbcontext.Model.FindEntityType(typeof(T)).FindPrimaryKey()
+                .Properties.Select(x => x.Name).Single();
+
             foreach (string item in props.Keys)
             {
                 object value = dbcontext.Entry(entity).Property(item).CurrentValue;
@@ -189,7 +194,12 @@ namespace Hexagon.Data.EF
                 {
                     if (value.ToString() == "&nbsp;")
                         dbcontext.Entry(entity).Property(item).CurrentValue = null;
-                    dbcontext.Entry(entity).Property(item).IsModified = true;
+
+                    if (!item.ToUpper().Equals(primarykeyName.ToUpper()))
+                    {
+                        //主键不能设置IsModified
+                        dbcontext.Entry(entity).Property(item).IsModified = true;
+                    }
                 }
             }
             return dbTransaction == null ? await this.Commit() : 0;

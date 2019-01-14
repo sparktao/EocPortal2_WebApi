@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Hexagon.Data.Entity;
+using Hexagon.Data.Entity.EntityConfiguration;
 
 namespace Hexagon.Data.EF.Context
 {
@@ -28,6 +29,13 @@ namespace Hexagon.Data.EF.Context
         }
 
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new Organization_EmployeeConfiguration());
+        }
 
 
         public DbSet<Organization_Employee> Organization_Employee { get; set; }
